@@ -350,7 +350,7 @@ export default function AdminShell({ user, children }: { user: AuthenticatedUser
         {/* Page content */}
         <main
           className="flex-1 overflow-auto p-6"
-          style={{ background: bg, transition: "background 0.3s" }}
+          style={{ background: bg, transition: "background 0.3s", minHeight: "calc(100vh - 56px)" }}
         >
           {children}
         </main>

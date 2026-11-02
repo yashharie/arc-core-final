@@ -1,14 +1,11 @@
 export default function ResultsLoading() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="h-14 bg-white border-b border-gray-200" />
-      <div className="max-w-3xl mx-auto px-4 py-10 animate-pulse">
-        <div className="h-7 w-36 bg-gray-200 rounded-lg mb-2" />
-        <div className="h-4 w-44 bg-gray-100 rounded mb-6" />
+    <div style={{ background: "#050c1a", minHeight: "100vh" }}>
+      <div className="h-14" style={{ background: "rgba(5,12,26,0.95)", borderBottom: "1px solid rgba(30,58,110,0.3)" }} />
+      <div className="max-w-4xl mx-auto px-5 pt-8 animate-pulse">
+        <div className="mb-6"><div className="h-7 w-28 rounded mb-1" style={{ background: "rgba(148,184,216,0.1)" }} /></div>
         <div className="space-y-3">
-          {[...Array(5)].map((_, i) => (
-            <div key={i} className="h-20 bg-gray-200 rounded-xl" />
-          ))}
+          {[...Array(5)].map((_, i) => (<div key={i} className="rounded-2xl p-5" style={{ background: "#0a1628", border: "1px solid rgba(30,58,110,0.4)", height: 76 }} />))}
         </div>
       </div>
     </div>

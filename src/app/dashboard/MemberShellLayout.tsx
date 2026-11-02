@@ -287,8 +287,9 @@ export default function MemberShellLayout({
           </form>
         </header>
 
-        {/* Page content */}
-        <main className="flex-1 overflow-auto p-6" style={{ background: bg, transition: "background 0.3s" }}>
+        {/* Page content — bg hardcoded dark so no white flash during navigation */}
+        <main className="flex-1 overflow-auto p-6"
+          style={{ background: isDark ? "#050c1a" : "#0b1830", transition: "background 0.3s", minHeight: "calc(100vh - 56px)" }}>
           {children}
         </main>
       </div>
