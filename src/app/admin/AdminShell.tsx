@@ -71,7 +71,7 @@ export default function AdminShell({ user, children }: { user: AuthenticatedUser
   const sidebarBg = isDark ? "rgba(8,15,30,0.98)" : "rgba(11,24,48,0.98)";
 
   return (
-    <div className="flex min-h-screen" style={{ background: bg }}>
+    <div className="flex min-h-screen" style={{ background: "#050c1a" }}>
 
       {/* ── Sidebar ────────────────────────────────────────────────── */}
       <aside

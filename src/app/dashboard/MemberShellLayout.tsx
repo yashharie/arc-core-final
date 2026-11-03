@@ -61,7 +61,7 @@ export default function MemberShellLayout({
   }
 
   return (
-    <div className="flex min-h-screen" style={{ background: bg }}>
+    <div className="flex min-h-screen" style={{ background: "#050c1a" }}>
 
       {/* ── Sidebar ────────────────────────────────────────────────── */}
       <aside
@@ -287,7 +287,7 @@ export default function MemberShellLayout({
           </form>
         </header>
 
-        {/* Page content — bg hardcoded dark so no white flash during navigation */}
+        {/* Page content — background hardcoded so no flash during navigation */}
         <main className="flex-1 overflow-auto p-6"
           style={{ background: isDark ? "#050c1a" : "#0b1830", transition: "background 0.3s", minHeight: "calc(100vh - 56px)" }}>
           {children}

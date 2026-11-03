@@ -1,3 +1,17 @@
-// Member quiz creation — inside the member dashboard layout (sidebar stays)
+import { Suspense } from "react";
+import NewQuizClientPage from "./ClientPage";
+
 export const instant = false;
-export { default } from "@/app/dashboard/quizzes/new/ClientPage";
+
+export default function MemberNewQuizPage() {
+  return (
+    <Suspense fallback={
+      <div className="animate-pulse space-y-4">
+        <div className="h-6 w-40 rounded" style={{ background: "rgba(148,184,216,0.1)" }} />
+        <div className="rounded-2xl p-7" style={{ background: "#0a1628", border: "1px solid rgba(30,58,110,0.4)", height: 360 }} />
+      </div>
+    }>
+      <NewQuizClientPage />
+    </Suspense>
+  );
+}

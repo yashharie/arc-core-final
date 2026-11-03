@@ -23,7 +23,12 @@
 
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; background: #050c1a; }
+
+/* Prevent white flash on any page during navigation or hydration */
+html, body, #__next {
+  background: #050c1a !important;
+}
 
 body {
   background: #050c1a;
