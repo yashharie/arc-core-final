@@ -144,13 +144,17 @@ export async function POST(
   // Recompute per-quiz ranks (correct desc, time asc for tie-break)
   await recomputeQuizRanks(attempt.quizId);
 
-  // Upsert overall leaderboard — use average score % for fairness
+  // Upsert overall leaderboard — use average score % across ALL submitted quizzes
+  // averageScorePercent = sum(all scores) / sum(all possible marks) × 100
+  // This is fair regardless of how many quizzes each person has taken.
   const allSubmitted = await prisma.attempt.findMany({
     where: { userId: user.id, status: "SUBMITTED" },
-    select: { score: true, totalMarks: true },
+    select: { score: true, totalMarks: true, correctAnswers: true },
   });
-  const totalScoreSum = allSubmitted.reduce((s, a) => s + a.score, 0);
-  const totalMarksSum = allSubmitted.reduce((s, a) => s + a.totalMarks, 0);
+
+  const totalScoreSum   = allSubmitted.reduce((s, a) => s + a.score, 0);
+  const totalMarksSum   = allSubmitted.reduce((s, a) => s + a.totalMarks, 0);
+  const totalCorrectSum = allSubmitted.reduce((s, a) => s + (a.correctAnswers ?? 0), 0);
   const averageScorePercent =
     totalMarksSum > 0
       ? Math.round((totalScoreSum / totalMarksSum) * 100 * 100) / 100
@@ -160,15 +164,16 @@ export async function POST(
     where: { userId: user.id },
     create: {
       userId: user.id,
-      totalScore: totalScoreSum,
-      quizzesTaken: allSubmitted.length,
-      totalCorrect: allSubmitted.reduce((s, _) => s + correctAnswers, correctAnswers),
-      totalQuestions: totalMarksSum,
+      totalScore:          totalScoreSum,
+      quizzesTaken:        allSubmitted.length,
+      totalCorrect:        totalCorrectSum,
+      totalQuestions:      totalMarksSum,
       averageScorePercent,
     },
     update: {
-      totalScore: totalScoreSum,
-      quizzesTaken: allSubmitted.length,
+      totalScore:          totalScoreSum,
+      quizzesTaken:        allSubmitted.length,
+      totalCorrect:        totalCorrectSum,
       averageScorePercent,
     },
   });
