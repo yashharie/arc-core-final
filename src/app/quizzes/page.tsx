@@ -96,7 +96,15 @@ export default async function QuizzesPage() {
                     )}
                     {q.status === "PUBLISHED" && (
                       <>
-                        <Link href={`/quizzes/${q.id}/take`} className="arc-btn text-xs px-3 py-1.5">Take</Link>
+                        {/* Creator cannot take their own quiz */}
+                        {q.createdById === user.id && user.role !== "ADMIN" ? (
+                          <span className="text-[10px] px-2.5 py-1.5 rounded-full font-semibold"
+                            style={{ background: "rgba(255,77,109,0.1)", color: "#ff8099" }}>
+                            🚫 Your quiz
+                          </span>
+                        ) : (
+                          <Link href={`/quizzes/${q.id}/take`} className="arc-btn text-xs px-3 py-1.5">Take</Link>
+                        )}
                         <Link href={`/quizzes/${q.id}/leaderboard`}
                           className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/5 transition-colors text-[#f5c842]"
                           title="Leaderboard">🏆</Link>

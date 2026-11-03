@@ -22,9 +22,16 @@ export async function GET(_req: Request, { params }: Ctx) {
     return Response.json({ error: "Quiz not found." }, { status: 404 });
   }
 
+  // Block the quiz creator from taking their own quiz
+  if (quiz.createdById === user.id && user.role !== "ADMIN") {
+    return Response.json(
+      { error: "You cannot take a quiz you created. This keeps the leaderboard fair." },
+      { status: 403 }
+    );
+  }
+
   const allowed =
     user.role === "ADMIN" ||
-    quiz.createdById === user.id ||
     quiz.assignments.some((a) => a.assignedToAll || a.userId === user.id);
   if (!allowed) return Response.json({ error: "Forbidden." }, { status: 403 });
 

@@ -64,6 +64,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Quiz is not available." }, { status: 403 });
   }
 
+  // Block the quiz creator from taking their own quiz — they know the answers
+  if (quiz.createdById === user.id) {
+    return NextResponse.json(
+      { error: "You cannot take a quiz you created. This keeps the leaderboard fair." },
+      { status: 403 }
+    );
+  }
+
   // Check access
   const allowed =
     user.role === "ADMIN" ||
